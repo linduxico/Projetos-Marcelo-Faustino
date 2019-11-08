@@ -19,7 +19,6 @@ import java.awt.event.MouseWheelListener;
 import java.awt.event.MouseWheelEvent;
 
 public class FrmContatos extends JFrame {
-
 	private JPanel contentPane;
 	private JTextField txtNome;
 	private JTextField txtEmail;
