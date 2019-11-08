@@ -6,12 +6,15 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 import backEnd.CadastroAdm;
+import backEnd.CadastroAnimal;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class TelaLogin extends JFrame {
@@ -20,6 +23,7 @@ public class TelaLogin extends JFrame {
 	private JTextField txtlogin;
 	private JTextField txtsenha;
 	private static TelaLogin frame;
+	private ArrayList<CadastroAnimal> lista = null;
 
 	/**
 	 * Launch the application.
@@ -75,15 +79,16 @@ public class TelaLogin extends JFrame {
 		btnLogar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CadastroAdm cdadm = new CadastroAdm();
-				if(txtlogin.getText().equals(cdadm.CadastroAdmin().getNome())&&txtsenha.getText().equals(cdadm.CadastroAdmin().getSenha())) {
-					TelaPrincipal tela = new TelaPrincipal(cdadm.CadastroAdmin().getNome());
+				//if(txtlogin.getText().equals(cdadm.CadastroAdmin().getNome())&&txtsenha.getText().equals(cdadm.CadastroAdmin().getSenha())) {
+					TelaPrincipal tela = new TelaPrincipal(cdadm.CadastroAdmin().getNome(),null);
 					tela.setVisible(true);
 					frame.setVisible(false);
+					/*
 				}
 				else {
 				JOptionPane.showMessageDialog(null, "Combinação inexata !!", "Error!!", JOptionPane.ERROR_MESSAGE);
 				txtsenha.setText("");
-				}
+				}*/
 			}
 		});
 		btnLogar.setFont(new Font("Arial", Font.PLAIN, 18));
