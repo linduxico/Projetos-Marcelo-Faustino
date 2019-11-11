@@ -16,18 +16,18 @@ public class LerArquivos {
 	private String forstri = ", formacao=";
 	private String peristri = ", periodo=";
 
-	public ArrayList<Professores> lerArquivo(String nomearq) throws FileNotFoundException, IOException {
+	public ArrayList<CadastroAnimal> lerArquivo(String nomearq) throws FileNotFoundException, IOException {
 		GravarArquivo gv = new GravarArquivo();
-		ArrayList<Professores> listprof = new ArrayList<Professores>();
+		ArrayList<CadastroAnimal> listprof = new ArrayList<CadastroAnimal>();
 		FileReader fr = new FileReader(nomearq + gv.getNarq());
 		BufferedReader br = new BufferedReader(fr);
-		Professores prof = new Professores();
+		CadastroAnimal prof = new CadastroAnimal();
 		String linha;
 		int i = 0;
 		while (br.ready()) {
 			linha = br.readLine();
 			if (linha.length() > 10) {
-				prof = new Professores();
+				prof = new CadastroAnimal();
 				String nome = linha.substring(linha.indexOf(nstri), linha.lastIndexOf(distri));
 					prof.setNome(nome = nome.replaceAll(nstri, ""), i);
 					String disciplina = linha.substring(linha.indexOf(distri), linha.lastIndexOf(forstri));

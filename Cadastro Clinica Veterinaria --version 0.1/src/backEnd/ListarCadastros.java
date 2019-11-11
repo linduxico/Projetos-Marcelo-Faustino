@@ -23,18 +23,23 @@ public class ListarCadastros extends JFrame {
 	private JTable table;
 	private static ListarCadastros frame;
 
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					frame = new ListarCadastros(lista,null);
+					frame = new ListarCadastros();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
-	}*/
+	}
+
+	public ListarCadastros() {
+		setEnabled(false);
+
+	}
 
 	public ListarCadastros(String nome, ArrayList<CadastroAnimal> lista) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -49,19 +54,23 @@ public class ListarCadastros extends JFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
-				try{
-				DefaultTableModel modelo = (DefaultTableModel) table.getModel();
-				modelo.setRowCount(0);
-				for (int i = 0; i < lista.size(); i++) {
-					modelo.addRow(new Object[] { lista.get(i).getId(),lista.get(i).getNome(), lista.get(i).getTipo(), lista.get(i).getRaca(),
-							lista.get(i).getCor(), lista.get(i).getPeso(), lista.get(i).getAltura(),
-							lista.get(i).getAnoNasc() });
-				}
-				}
-				catch (Exception e1) {
-					JOptionPane.showMessageDialog(null, "Verifique se adicinou algum cadastro, no momento não consta nenhum no sistema, ou contate o Administrador do Sistema !!","Error, Grave !!", JOptionPane.WARNING_MESSAGE);
+				try {
+
+					DefaultTableModel modelo = (DefaultTableModel) table.getModel();
+					modelo.setRowCount(0);
+					//modelo.addRow(new String[]{ id, "Nome", "Tipo", "Raça", "Cor", "Peso", "Altura", "Ano De Nascimento" });
+					for (int i = 0; i < lista.size(); i++) {
+						modelo.addRow(new Object[] { lista.get(i).getId(), lista.get(i).getNome(),
+								lista.get(i).getTipo(), lista.get(i).getRaca(), lista.get(i).getCor(),
+								lista.get(i).getPeso(), lista.get(i).getAltura(), lista.get(i).getAnoNasc() });
+					}
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null,
+							"Verifique se adicinou algum cadastro, no momento não consta nenhum no sistema, ou contate o Administrador do Sistema !!",
+							"Error, Grave !!", JOptionPane.WARNING_MESSAGE);
 				}
 			}
+
 			@Override
 			public void windowClosed(WindowEvent e) {
 				TelaPrincipal tela = new TelaPrincipal(nome, lista);
@@ -70,18 +79,15 @@ public class ListarCadastros extends JFrame {
 			}
 		});
 
-		
 		// declascao do scroll pane com o jpnael fazendo implemento
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 
 		table = new JTable();
 		table.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "Id","Nome", "Tipo", "Raça", "Cor", "Peso", "Altura", "Ano De Nascimento" }));
+				new String[] {"Id", "Nome", "Tipo", "Raça", "Cor", "Peso", "Altura", "Ano De Nascimento" }));
 		scrollPane.setViewportView(table);
-		
-			
-	
+
 	}
 
 }

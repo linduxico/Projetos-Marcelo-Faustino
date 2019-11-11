@@ -1,6 +1,6 @@
 package exercicio;
 
-public class Professores {
+public class CadastroAnimal {
 	String nome;
 	String disciplina;
 	String formacao;

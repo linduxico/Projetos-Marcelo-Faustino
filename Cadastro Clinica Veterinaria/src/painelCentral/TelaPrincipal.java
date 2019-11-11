@@ -38,7 +38,7 @@ public class TelaPrincipal extends JFrame {
 		}
 		setTitle("Clina Veterinaria Animal Sensation");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 747, 598);
+		setBounds(100, 100, 569, 234);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -57,23 +57,23 @@ public class TelaPrincipal extends JFrame {
 				}
 			}
 		});
-		btnCadastrar.setBounds(73, 196, 162, 71);
+		btnCadastrar.setBounds(32, 74, 88, 35);
 		contentPane.add(btnCadastrar);
 
 		JLabel lblTelaBoasVindas = new JLabel("");
-		lblTelaBoasVindas.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblTelaBoasVindas.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblTelaBoasVindas.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTelaBoasVindas.setForeground(Color.GREEN);
-		lblTelaBoasVindas.setBounds(10, 59, 713, 54);
+		lblTelaBoasVindas.setForeground(Color.RED);
+		lblTelaBoasVindas.setBounds(10, 10, 534, 54);
 		contentPane.add(lblTelaBoasVindas);
 		lblTelaBoasVindas.setText(nome + " Seja Bem Vindo(a)!! ");
 
 		JButton btnAlterar = new JButton("Alterar");
-		btnAlterar.setBounds(282, 196, 162, 71);
+		btnAlterar.setBounds(32, 119, 88, 35);
 		contentPane.add(btnAlterar);
 
 		JButton btnExcluir = new JButton("Excluir");
-		btnExcluir.setBounds(498, 196, 162, 71);
+		btnExcluir.setBounds(142, 119, 95, 35);
 		contentPane.add(btnExcluir);
 
 		JButton btnListar = new JButton("Listar");
@@ -85,19 +85,19 @@ public class TelaPrincipal extends JFrame {
 				dispose();
 			}
 		});
-		btnListar.setBounds(73, 310, 162, 71);
+		btnListar.setBounds(411, 74, 105, 77);
 		contentPane.add(btnListar);
 
 		JButton btnGravardados = new JButton("Gravar Dados");
-		btnGravardados.setBounds(282, 310, 162, 71);
+		btnGravardados.setBounds(142, 74, 95, 35);
 		contentPane.add(btnGravardados);
 
 		JButton btnImportardados = new JButton("Importar Dados");
-		btnImportardados.setBounds(498, 310, 162, 71);
+		btnImportardados.setBounds(255, 119, 127, 35);
 		contentPane.add(btnImportardados);
 
 		JButton btnSelecionarPasta = new JButton("Selecionar Pasta");
-		btnSelecionarPasta.setBounds(282, 428, 162, 71);
+		btnSelecionarPasta.setBounds(255, 74, 127, 35);
 		contentPane.add(btnSelecionarPasta);
 	}
 }

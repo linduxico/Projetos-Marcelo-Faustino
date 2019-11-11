@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class ExcluirProf {
-	ArrayList<Professores>listprof = new ArrayList<Professores>();
-	public void excluirProf(ArrayList<Professores> tamanho) {
+	ArrayList<CadastroAnimal>listprof = new ArrayList<CadastroAnimal>();
+	public void excluirProf(ArrayList<CadastroAnimal> tamanho) {
 		JOptionPane.showMessageDialog(null, "Escolha na lista o id a ser excluido !!");
 		Listar listar = new Listar();
 		listprof.addAll(tamanho);

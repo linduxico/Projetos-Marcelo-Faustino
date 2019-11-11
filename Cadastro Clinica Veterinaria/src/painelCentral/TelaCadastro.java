@@ -66,6 +66,7 @@ public class TelaCadastro extends JFrame {
 		this.setLocationRelativeTo(null);
 
 		JLabel lblBoasVindas = new JLabel("Vamos Cadastrar Seu, " + (lista.size()+1) + "º Pet ?? =)");
+		lblBoasVindas.setEnabled(false);
 		lblBoasVindas.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblBoasVindas.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBoasVindas.setBounds(10, 10, 565, 52);

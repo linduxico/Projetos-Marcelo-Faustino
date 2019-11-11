@@ -6,15 +6,15 @@ import javax.swing.JOptionPane;
 
 
 public class AdicionarProf {
-	ArrayList<Professores> listprof = new ArrayList<Professores>();
-	Professores prof;
+	ArrayList<CadastroAnimal> listprof = new ArrayList<CadastroAnimal>();
+	CadastroAnimal prof;
 
-	public Professores adicionarProf(ArrayList<Professores> tamanho) {
-		prof = new Professores();
+	public CadastroAnimal adicionarProf(ArrayList<CadastroAnimal> tamanho) {
+		prof = new CadastroAnimal();
 		listprof.addAll(tamanho);
 		prof.setNome(JOptionPane.showInputDialog("Insira o nome do prof."), listprof.size() + 1);
 		prof.setDisciplina(JOptionPane.showInputDialog("Insira a Disciplina que o " + prof.getNome() + " domina."));
-		prof.setFormacao(JOptionPane.showInputDialog("Defina Qual a formação do " + prof.getNome()));
+		prof.setFormacao(JOptionPane.showInputDialog("Defina Qual a formaï¿½ï¿½o do " + prof.getNome()));
 		prof.setPeriodo(Integer.parseInt(JOptionPane.showInputDialog(
 				"Insira o periodo em que o " + prof.getNome() + " esta na materia " + prof.getDisciplina())));
 		return prof;

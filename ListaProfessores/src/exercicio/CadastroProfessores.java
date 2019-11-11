@@ -6,22 +6,22 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class CadastroProfessores {
-	static Professores prof;
-	static ArrayList<Professores> listprof;
+	static CadastroAnimal prof;
+	static ArrayList<CadastroAnimal> listprof;
 	static String NOME_ARQ = System.getProperty("user.home");
 
 	public static void main(String args[]) {
 		int op = 1;
-		listprof = new ArrayList<Professores>();
+		listprof = new ArrayList<CadastroAnimal>();
 		JOptionPane.showMessageDialog(null, "Este programa Vai cadastrar os Alunos !!");
 		while (op != 0) {
 			op = Integer.parseInt(JOptionPane.showInputDialog(
-					"Insira uma opção:\n0 - Sair\n1 - Inserir Prof\n2 - Listar Prof\n3 - Alterar Prof\n4 - Excluir Prof\n5 - Gravar Dados\n6 - Ler Arquivo\n7 - Modificar Pasta Aonde salva."));
+					"Insira uma opï¿½ï¿½o:\n0 - Sair\n1 - Inserir Prof\n2 - Listar Prof\n3 - Alterar Prof\n4 - Excluir Prof\n5 - Gravar Dados\n6 - Ler Arquivo\n7 - Modificar Pasta Aonde salva."));
 			if (op == 0) {
 				JOptionPane.showMessageDialog(null, "Este programa Foi Finalizado !!");
 			}
 			if (op == 1) {
-				prof = new Professores();
+				prof = new CadastroAnimal();
 				AdicionarProf adicionarProf = new AdicionarProf();
 				prof = adicionarProf.adicionarProf(listprof);
 				listprof.add(prof);
@@ -32,7 +32,7 @@ public class CadastroProfessores {
 			}
 			if (op == 3) {
 				AlterarProf alterarProf= new AlterarProf();
-				Professores novo = alterarProf.alterarProf(listprof);
+				CadastroAnimal novo = alterarProf.alterarProf(listprof);
 				listprof.set(alterarProf.getOp(), novo);
 			}
 			if (op == 4) {

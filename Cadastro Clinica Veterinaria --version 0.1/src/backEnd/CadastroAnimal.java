@@ -1,7 +1,7 @@
 package backEnd;
 
 public class CadastroAnimal {
-	private int id =0;
+	private int id=0;
 	private String nome;
 	private String tipo;
 	private String raca;
@@ -13,9 +13,9 @@ public class CadastroAnimal {
 	public CadastroAnimal() {
 		
 	}
-	public CadastroAnimal(String nome, String tipo, String raca, String cor, float peso, float altura,
+	public CadastroAnimal(int id,String nome, String tipo, String raca, String cor, float peso, float altura,
 			int anoNasc) {
-		this.id += 1;
+		this.id = id;
 		this.nome = nome;
 		this.tipo = tipo;
 		this.raca = raca;

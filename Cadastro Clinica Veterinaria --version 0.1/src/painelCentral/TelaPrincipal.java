@@ -3,20 +3,27 @@ package painelCentral;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import backEnd.CadastroAnimal;
+import backEnd.ImportarDados;
 import backEnd.ListarCadastros;
+import backEnd.LogicaClinica;
+import jdk.nashorn.internal.scripts.JO;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.Color;
-import java.awt.EventQueue;
-
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class TelaPrincipal extends JFrame {
 
@@ -24,6 +31,8 @@ public class TelaPrincipal extends JFrame {
 	private static TelaPrincipal frame;
 	private int count = 1;
 	private ArrayList<CadastroAnimal> lista = new ArrayList<CadastroAnimal>();
+	private String locarq = "";
+	private String nomearq = "";
 
 	/*
 	 * public static void main(String[] args) { EventQueue.invokeLater(new
@@ -38,7 +47,7 @@ public class TelaPrincipal extends JFrame {
 		}
 		setTitle("Clina Veterinaria Animal Sensation");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 747, 598);
+		setBounds(100, 100, 520, 195);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -57,23 +66,28 @@ public class TelaPrincipal extends JFrame {
 				}
 			}
 		});
-		btnCadastrar.setBounds(73, 196, 162, 71);
+		btnCadastrar.setBounds(20, 96, 100, 35);
 		contentPane.add(btnCadastrar);
 
 		JLabel lblTelaBoasVindas = new JLabel("");
-		lblTelaBoasVindas.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblTelaBoasVindas.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblTelaBoasVindas.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTelaBoasVindas.setForeground(Color.GREEN);
-		lblTelaBoasVindas.setBounds(10, 59, 713, 54);
+		lblTelaBoasVindas.setForeground(Color.RED);
+		lblTelaBoasVindas.setBounds(10, 32, 486, 54);
 		contentPane.add(lblTelaBoasVindas);
 		lblTelaBoasVindas.setText(nome + " Seja Bem Vindo(a)!! ");
 
 		JButton btnAlterar = new JButton("Alterar");
-		btnAlterar.setBounds(282, 196, 162, 71);
+		btnAlterar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		btnAlterar.setBounds(134, 96, 100, 35);
 		contentPane.add(btnAlterar);
 
 		JButton btnExcluir = new JButton("Excluir");
-		btnExcluir.setBounds(498, 196, 162, 71);
+		btnExcluir.setBounds(244, 96, 115, 35);
 		contentPane.add(btnExcluir);
 
 		JButton btnListar = new JButton("Listar");
@@ -85,19 +99,40 @@ public class TelaPrincipal extends JFrame {
 				dispose();
 			}
 		});
-		btnListar.setBounds(73, 310, 162, 71);
+		btnListar.setBounds(369, 97, 117, 32);
 		contentPane.add(btnListar);
-
-		JButton btnGravardados = new JButton("Gravar Dados");
-		btnGravardados.setBounds(282, 310, 162, 71);
-		contentPane.add(btnGravardados);
-
-		JButton btnImportardados = new JButton("Importar Dados");
-		btnImportardados.setBounds(498, 310, 162, 71);
-		contentPane.add(btnImportardados);
-
-		JButton btnSelecionarPasta = new JButton("Selecionar Pasta");
-		btnSelecionarPasta.setBounds(282, 428, 162, 71);
-		contentPane.add(btnSelecionarPasta);
+		
+		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBounds(0, 0, 53, 22);
+		contentPane.add(menuBar);
+		
+		JMenu mnOpes = new JMenu("Opções");
+		menuBar.add(mnOpes);
+		
+		JMenuItem mnGravarDados = new JMenuItem("Gravar Dados");
+		mnGravarDados.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ImportarDados imp = ImportarDados();
+				LogicaClinica lg = LogicaClinica();
+				lg.retornapergunta("Voce deseja Subscrever o arquivo se ele ");
+				
+				imp.gravarArquivo(lista, locarq, nomearq, true);
+			}
+		});
+		mnOpes.add(mnGravarDados);
+		
+		JMenuItem mnImportarDados = new JMenuItem("Importar Dados");
+		mnOpes.add(mnImportarDados);
+		
+		JMenuItem mnSelecionarPastaDestino = new JMenuItem("Selecionar pasta Destino");
+		mnOpes.add(mnSelecionarPastaDestino);
+		
+		JMenuItem mnAlterarNomeDo = new JMenuItem("Alterar Nome do Arquivo");
+		mnOpes.add(mnAlterarNomeDo);
+	}
+	
+	
+		
 	}
 }

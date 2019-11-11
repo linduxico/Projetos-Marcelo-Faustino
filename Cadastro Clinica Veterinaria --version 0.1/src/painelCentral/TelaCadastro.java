@@ -28,24 +28,8 @@ public class TelaCadastro extends JFrame {
 	private JTextField txtPeso;
 	private JTextField txtAltura;
 	private JTextField txtAnoNasc;
-	private CadastroAnimal pet;
 	private ArrayList<CadastroAnimal>lista = new ArrayList<CadastroAnimal>();
 
-	/**
-	 * Launch the application.
-	 * 
-	 * @param
-	 */
-	/*
-	 * public static void main(String[] args) { EventQueue.invokeLater(new
-	 * Runnable() { public void run() { try { TelaCadastro frame = new
-	 * TelaCadastro("nome", null, 1); frame.setVisible(true); } catch (Exception e)
-	 * { e.printStackTrace(); } } }); }
-	 * 
-	 * /** Create the frame.
-	 * 
-	 * @param nome
-	 */
 	public TelaCadastro(String nome, ArrayList<CadastroAnimal> arrayList) {
 		lista.addAll(arrayList);
 		addWindowListener(new WindowAdapter() {
@@ -64,6 +48,7 @@ public class TelaCadastro extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		this.setLocationRelativeTo(null);
+		
 
 		JLabel lblBoasVindas = new JLabel("Vamos Cadastrar Seu, " + (lista.size()+1) + "º Pet ?? =)");
 		lblBoasVindas.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -115,8 +100,9 @@ public class TelaCadastro extends JFrame {
 		JButton btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				CadastroAnimal pet;
 				try {
-					lista.add(pet = new CadastroAnimal(txtNome.getText(), txtTipo.getText(), txtRaca.getText(),
+					lista.add(pet = new CadastroAnimal((lista.size()+1),txtNome.getText(), txtTipo.getText(), txtRaca.getText(),
 							txtCor.getText(), Float.parseFloat(txtPeso.getText()),
 							Float.parseFloat(txtAltura.getText()), Integer.parseInt(txtAnoNasc.getText())));
 					JOptionPane.showMessageDialog(null, "Pet Cadastrado Com Sucesso !!", "Parabens.",
@@ -191,6 +177,7 @@ public class TelaCadastro extends JFrame {
 		lblEx.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblEx.setBounds(520, 307, 63, 33);
 		contentPane.add(lblEx);
+		LimparCampos();
 	}
 
 	public void LimparCampos() {
@@ -198,8 +185,8 @@ public class TelaCadastro extends JFrame {
 		txtTipo.setText("");
 		txtRaca.setText("");
 		txtCor.setText("");
-		txtPeso.setText("");
-		txtAltura.setText("");
-		txtAnoNasc.setText("");
+		txtPeso.setText("1");
+		txtAltura.setText("1");
+		txtAnoNasc.setText("1");
 	}
 }
