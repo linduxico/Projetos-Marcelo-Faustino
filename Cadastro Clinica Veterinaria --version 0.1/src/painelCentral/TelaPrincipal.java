@@ -7,8 +7,9 @@ import backEnd.CadastroAnimal;
 import backEnd.ImportarDados;
 import backEnd.ListarCadastros;
 import backEnd.LogicaClinica;
-import jdk.nashorn.internal.scripts.JO;
-
+import backEnd.TelaCadastro;
+import backEnd.TelaExcluir;
+import backEnd.AlteracoesDiretorios;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.Color;
@@ -21,9 +22,9 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 public class TelaPrincipal extends JFrame {
 
@@ -31,19 +32,15 @@ public class TelaPrincipal extends JFrame {
 	private static TelaPrincipal frame;
 	private int count = 1;
 	private ArrayList<CadastroAnimal> lista = new ArrayList<CadastroAnimal>();
-	private String locarq = "";
-	private String nomearq = "";
+	private String locarq = System.getProperty("user.home");
+	private String nomearq = "arq";
+	private ImportarDados imp;
+	private String extencao = "\\" + nomearq + ".txt";
+	private String separacao = ",";
 
-	/*
-	 * public static void main(String[] args) { EventQueue.invokeLater(new
-	 * Runnable() { public void run() { try { frame = new TelaPrincipal(null, null);
-	 * frame.setVisible(true); } catch (Exception e) { e.printStackTrace(); } } });
-	 * }
-	 */
 	public TelaPrincipal(String nome, ArrayList<CadastroAnimal> arrayList) {
 		if (arrayList != null) {
 			lista.addAll(arrayList);
-
 		}
 		setTitle("Clina Veterinaria Animal Sensation");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -58,7 +55,7 @@ public class TelaPrincipal extends JFrame {
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					TelaCadastro cadastro = new TelaCadastro(nome, lista);
+					TelaCadastro cadastro = new TelaCadastro(nome, lista, -1);
 					cadastro.setVisible(true);
 					dispose();
 				} catch (Exception e1) {
@@ -80,13 +77,28 @@ public class TelaPrincipal extends JFrame {
 		JButton btnAlterar = new JButton("Alterar");
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				ListarCadastros listar = new ListarCadastros(nome, lista);
+				listar.setVisible(true);
+				int op = Integer.parseInt(
+						JOptionPane.showInputDialog(null, "Escolha na lista qual o id que deseja alterar !!"));
+				TelaCadastro cadastro = new TelaCadastro(nome, lista, op);
+				cadastro.setVisible(true);
+				listar.setVisible(false);
+				dispose();
 			}
 		});
 		btnAlterar.setBounds(134, 96, 100, 35);
 		contentPane.add(btnAlterar);
 
 		JButton btnExcluir = new JButton("Excluir");
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaExcluir excluir = new TelaExcluir(lista, nome);
+				excluir.setVisible(true);
+				excluir.requestFocus();
+				dispose();
+			}
+		});
 		btnExcluir.setBounds(244, 96, 115, 35);
 		contentPane.add(btnExcluir);
 
@@ -101,38 +113,63 @@ public class TelaPrincipal extends JFrame {
 		});
 		btnListar.setBounds(369, 97, 117, 32);
 		contentPane.add(btnListar);
-		
+
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 53, 22);
 		contentPane.add(menuBar);
-		
+
 		JMenu mnOpes = new JMenu("Opções");
 		menuBar.add(mnOpes);
-		
+
 		JMenuItem mnGravarDados = new JMenuItem("Gravar Dados");
 		mnGravarDados.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				ImportarDados imp = ImportarDados();
-				LogicaClinica lg = LogicaClinica();
-				lg.retornapergunta("Voce deseja Subscrever o arquivo se ele ");
-				
-				imp.gravarArquivo(lista, locarq, nomearq, true);
+			public void mousePressed(MouseEvent e) {
+				imp = new ImportarDados();
+				LogicaClinica lg = new LogicaClinica();
+				try {
+					imp.gravarArquivo(lista, locarq, extencao,
+							lg.retornapergunta("Voce deseja Subscrever o arquivo se ele existir?"));
+				} catch (IOException e1) {
+					System.out.println(e1);
+				}
 			}
 		});
 		mnOpes.add(mnGravarDados);
-		
+
 		JMenuItem mnImportarDados = new JMenuItem("Importar Dados");
+		mnImportarDados.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				imp = new ImportarDados();
+				try {
+					lista.clear();
+					lista.addAll(imp.lerArquivo(locarq, extencao, separacao));
+				} catch (IOException e1) {
+					JOptionPane.showMessageDialog(null, "Verifique, a pasta destino parece nao conter o arquivo!! ");
+				}
+			}
+		});
 		mnOpes.add(mnImportarDados);
-		
+
 		JMenuItem mnSelecionarPastaDestino = new JMenuItem("Selecionar pasta Destino");
+		mnSelecionarPastaDestino.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				AlteracoesDiretorios altera = new AlteracoesDiretorios();
+				locarq = altera.escolherPasta();
+			}
+		});
 		mnOpes.add(mnSelecionarPastaDestino);
-		
+
 		JMenuItem mnAlterarNomeDo = new JMenuItem("Alterar Nome do Arquivo");
+		mnAlterarNomeDo.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				nomearq = JOptionPane.showInputDialog("Insira o nome do arquivo para que seja alterado: ");
+			}
+		});
 		mnOpes.add(mnAlterarNomeDo);
 	}
-	
-	
-		
-	}
+
 }

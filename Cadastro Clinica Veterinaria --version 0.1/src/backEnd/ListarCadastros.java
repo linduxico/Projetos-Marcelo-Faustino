@@ -37,8 +37,7 @@ public class ListarCadastros extends JFrame {
 	}
 
 	public ListarCadastros() {
-		setEnabled(false);
-
+		
 	}
 
 	public ListarCadastros(String nome, ArrayList<CadastroAnimal> lista) {

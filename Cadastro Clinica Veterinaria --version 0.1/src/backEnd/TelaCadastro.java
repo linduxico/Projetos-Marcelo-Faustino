@@ -1,9 +1,11 @@
-package painelCentral;
+package backEnd;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import backEnd.CadastroAnimal;
+
+import painelCentral.TelaPrincipal;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
@@ -29,8 +31,9 @@ public class TelaCadastro extends JFrame {
 	private JTextField txtAltura;
 	private JTextField txtAnoNasc;
 	private ArrayList<CadastroAnimal>lista = new ArrayList<CadastroAnimal>();
-
-	public TelaCadastro(String nome, ArrayList<CadastroAnimal> arrayList) {
+	
+	
+	public TelaCadastro(String nome, ArrayList<CadastroAnimal> arrayList, int op) {
 		lista.addAll(arrayList);
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -102,13 +105,26 @@ public class TelaCadastro extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				CadastroAnimal pet;
 				try {
-					lista.add(pet = new CadastroAnimal((lista.size()+1),txtNome.getText(), txtTipo.getText(), txtRaca.getText(),
-							txtCor.getText(), Float.parseFloat(txtPeso.getText()),
-							Float.parseFloat(txtAltura.getText()), Integer.parseInt(txtAnoNasc.getText())));
-					JOptionPane.showMessageDialog(null, "Pet Cadastrado Com Sucesso !!", "Parabens.",
-							JOptionPane.INFORMATION_MESSAGE);
-					lblBoasVindas.setText("Vamos Cadastrar Seu, " + (lista.size()+1) + "º Pet ?? =)");
-					LimparCampos();
+					if(op>0) {
+						lista.set((op-1),pet = new CadastroAnimal((op),txtNome.getText(), txtTipo.getText(), txtRaca.getText(),
+								txtCor.getText(), Float.parseFloat(txtPeso.getText()),
+								Float.parseFloat(txtAltura.getText()), Integer.parseInt(txtAnoNasc.getText())));
+						JOptionPane.showMessageDialog(null, "Pet Alterado Com Sucesso !!", "Parabens.",
+								JOptionPane.INFORMATION_MESSAGE);
+						lblBoasVindas.setText("Vamos Cadastrar Seu, " + (op) + "º Pet ?? =)");
+						LimparCampos();
+						dispose();
+					}
+					if(op<0) {
+
+						lista.add(pet = new CadastroAnimal((lista.size()+1),txtNome.getText(), txtTipo.getText(), txtRaca.getText(),
+								txtCor.getText(), Float.parseFloat(txtPeso.getText()),
+								Float.parseFloat(txtAltura.getText()), Integer.parseInt(txtAnoNasc.getText())));
+						JOptionPane.showMessageDialog(null, "Pet Cadastrado Com Sucesso !!", "Parabens.",
+								JOptionPane.INFORMATION_MESSAGE);
+						lblBoasVindas.setText("Vamos Cadastrar Seu, " + (lista.size()+1) + "º Pet ?? =)");
+						LimparCampos();
+					}
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null,
 							"Infelizmente nao aceitamos letras nos campos, Peso, Altura e Ano, Reveja os dados e tente novamente !!",
@@ -177,7 +193,9 @@ public class TelaCadastro extends JFrame {
 		lblEx.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblEx.setBounds(520, 307, 63, 33);
 		contentPane.add(lblEx);
-		LimparCampos();
+		if(op>0) {
+			atribuircontatods(op);
+		}
 	}
 
 	public void LimparCampos() {
@@ -185,8 +203,17 @@ public class TelaCadastro extends JFrame {
 		txtTipo.setText("");
 		txtRaca.setText("");
 		txtCor.setText("");
-		txtPeso.setText("1");
-		txtAltura.setText("1");
-		txtAnoNasc.setText("1");
+		txtPeso.setText("");
+		txtAltura.setText("");
+		txtAnoNasc.setText("");
+	}
+	public void atribuircontatods(int op) {
+		txtNome.setText(lista.get((op-1)).getNome());
+		txtTipo.setText(lista.get((op-1)).getTipo());
+		txtRaca.setText(lista.get((op-1)).getRaca());
+		txtCor.setText(lista.get((op-1)).getCor());
+		txtPeso.setText(lista.get((op-1)).getPeso()+"");
+		txtAltura.setText(lista.get((op-1)).getAltura()+"");
+		txtAnoNasc.setText(lista.get((op-1)).getAnoNasc()+"");
 	}
 }
