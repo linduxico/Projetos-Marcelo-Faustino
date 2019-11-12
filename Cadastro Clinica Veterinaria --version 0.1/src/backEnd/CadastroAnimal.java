@@ -1,7 +1,7 @@
 package backEnd;
 
 public class CadastroAnimal {
-	private int id=0;
+	private int id;
 	private String nome;
 	private String tipo;
 	private String raca;

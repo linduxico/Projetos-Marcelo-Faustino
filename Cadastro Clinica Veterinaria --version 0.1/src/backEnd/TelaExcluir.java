@@ -51,8 +51,16 @@ public class TelaExcluir extends JFrame {
 				listar.setVisible(true);
 				int op = Integer.parseInt(
 						JOptionPane.showInputDialog(null, "Escolha na lista qual o id deseja Excluir !!"));
-				JOptionPane.showMessageDialog(null, lista.get((op-1)).getNome()+" Foi Excluido com sucesso !!");
-				lista.remove((op-1));
+				for (int i = 0; i < lista.size(); i++) {
+					if(op==lista.get(i).getId()) {
+						JOptionPane.showMessageDialog(null, lista.get((i)).getNome()+" Foi Excluido com sucesso !!");
+						lista.remove(i);
+					}
+					else {
+						JOptionPane.showMessageDialog(null," O item não foi encontrado, tente outro Id !!","Error", JOptionPane.WARNING_MESSAGE);
+					}
+				}
+				
 				listar.setVisible(false);
 				dispose();
 			}
