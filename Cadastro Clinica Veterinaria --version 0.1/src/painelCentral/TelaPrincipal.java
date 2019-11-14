@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import backEnd.CadastroAnimal;
-import backEnd.ImportarDados;
+import backEnd.ImportarDadosAnimais;
 import backEnd.ListarCadastros;
 import backEnd.LogicaClinica;
 import backEnd.TelaCadastro;
@@ -31,17 +31,16 @@ public class TelaPrincipal extends JFrame {
 	private JPanel contentPane;
 	private static TelaPrincipal frame;
 	private int count = 1;
-	private ArrayList<CadastroAnimal> lista = new ArrayList<CadastroAnimal>();
+	private ArrayList<CadastroAnimal> lista;
+	private ImportarDadosAnimais imp;
 	private String locarq = System.getProperty("user.home");
 	private String nomearq = "arq";
-	private ImportarDados imp;
 	private String extencao = "\\" + nomearq + ".txt";
 	private String separacao = ",";
 
 	public TelaPrincipal(String nome, ArrayList<CadastroAnimal> arrayList) {
-		if (arrayList != null) {
-			lista.addAll(arrayList);
-		}
+		lista = new ArrayList<CadastroAnimal>();
+		this.lista = arrayList;
 		setTitle("Clina Veterinaria Animal Sensation");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 520, 195);
@@ -125,7 +124,7 @@ public class TelaPrincipal extends JFrame {
 		mnGravarDados.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				imp = new ImportarDados();
+				imp = new ImportarDadosAnimais();
 				LogicaClinica lg = new LogicaClinica();
 				try {
 					imp.gravarArquivo(lista, locarq, extencao,
@@ -141,10 +140,10 @@ public class TelaPrincipal extends JFrame {
 		mnImportarDados.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				imp = new ImportarDados();
+				imp = new ImportarDadosAnimais();
 				try {
 					lista.clear();
-					lista.addAll(imp.lerArquivo(locarq, extencao, separacao));
+					lista = imp.lerArquivo(locarq, extencao, separacao);
 				} catch (IOException e1) {
 					JOptionPane.showMessageDialog(null, "Verifique, a pasta destino parece nao conter o arquivo!! ");
 				}

@@ -35,7 +35,12 @@ public class TelaCadastro extends JFrame {
 	
 	
 	public TelaCadastro(String nome, ArrayList<CadastroAnimal> arrayList, int op) {
-		lista.addAll(arrayList);
+		if(arrayList!=null) {
+			this.lista =arrayList;
+		}
+		if(lista.size()>0) {
+			id = lista.get((lista.size()-1)).getId()+1;
+		}
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {
@@ -54,7 +59,7 @@ public class TelaCadastro extends JFrame {
 		this.setLocationRelativeTo(null);
 		
 
-		JLabel lblBoasVindas = new JLabel("Vamos Cadastrar Seu, " + (lista.size()+1) + "º Pet ?? =)");
+		JLabel lblBoasVindas = new JLabel("Vamos Cadastrar Seu, " + (id) + "º Pet ?? =)");
 		lblBoasVindas.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblBoasVindas.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBoasVindas.setBounds(10, 10, 565, 52);
@@ -119,13 +124,13 @@ public class TelaCadastro extends JFrame {
 						LimparCampos();
 						dispose();
 					}
-					if(op<0) {
+					else {
 						lista.add(pet = new CadastroAnimal(id,txtNome.getText(), txtTipo.getText(), txtRaca.getText(),
 								txtCor.getText(), Float.parseFloat(txtPeso.getText()),
 								Float.parseFloat(txtAltura.getText()), Integer.parseInt(txtAnoNasc.getText())));
 						JOptionPane.showMessageDialog(null, "Pet Cadastrado Com Sucesso !!", "Parabens.",
 								JOptionPane.INFORMATION_MESSAGE);
-						lblBoasVindas.setText("Vamos Cadastrar Seu, " + (lista.size()+1) + "º Pet ?? =)");
+						lblBoasVindas.setText("Vamos Cadastrar Seu, " + (id+1) + "º Pet ?? =)");
 						LimparCampos();
 					}
 				} catch (Exception e1) {
@@ -197,7 +202,7 @@ public class TelaCadastro extends JFrame {
 		lblEx.setBounds(520, 307, 63, 33);
 		contentPane.add(lblEx);
 		if(op>0) {
-			atribuircontatods(op);
+			atribuircontatods(op,lista);
 		}
 	}
 
@@ -210,7 +215,7 @@ public class TelaCadastro extends JFrame {
 		txtAltura.setText("");
 		txtAnoNasc.setText("");
 	}
-	public void atribuircontatods(int op) {
+	public void atribuircontatods(int op, ArrayList<CadastroAnimal>lista) {
 		txtNome.setText(lista.get((op-1)).getNome());
 		txtTipo.setText(lista.get((op-1)).getTipo());
 		txtRaca.setText(lista.get((op-1)).getRaca());

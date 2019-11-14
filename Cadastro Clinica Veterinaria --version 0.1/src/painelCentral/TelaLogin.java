@@ -18,12 +18,11 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class TelaLogin extends JFrame {
-
 	private JPanel contentPane;
 	private JTextField txtlogin;
 	private JTextField txtsenha;
 	private static TelaLogin frame;
-	private ArrayList<CadastroAnimal> lista = null;
+	private ArrayList<CadastroAnimal> lista = new ArrayList<CadastroAnimal>();
 
 	/**
 	 * Launch the application.
@@ -80,7 +79,7 @@ public class TelaLogin extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				CadastroAdm cdadm = new CadastroAdm();
 				//if(txtlogin.getText().equals(cdadm.CadastroAdmin().getNome())&&txtsenha.getText().equals(cdadm.CadastroAdmin().getSenha())) {
-					TelaPrincipal tela = new TelaPrincipal(cdadm.CadastroAdmin().getNome(),null);
+					TelaPrincipal tela = new TelaPrincipal(cdadm.CadastroAdmin().getNome(),lista);
 					tela.setVisible(true);
 					frame.setVisible(false);
 					/*

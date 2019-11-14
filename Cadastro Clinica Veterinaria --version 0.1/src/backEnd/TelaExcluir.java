@@ -49,18 +49,35 @@ public class TelaExcluir extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ListarCadastros listar = new ListarCadastros(nome, lista);
 				listar.setVisible(true);
-				int op = Integer.parseInt(
-						JOptionPane.showInputDialog(null, "Escolha na lista qual o id deseja Excluir !!"));
-				for (int i = 0; i < lista.size(); i++) {
-					if(op==lista.get(i).getId()) {
-						JOptionPane.showMessageDialog(null, lista.get((i)).getNome()+" Foi Excluido com sucesso !!");
-						lista.remove(i);
+				LogicaClinica lg = new LogicaClinica();
+				int op = Integer
+						.parseInt(JOptionPane.showInputDialog(null, "Escolha na lista qual o id deseja Excluir !!"));
+				/*
+				 * for (int i = 0; i < lista.size(); i++) { if(op==lista.get(i).getId()) {
+				 * LogicaClinica lg = new LogicaClinica();
+				 * if(lg.retornapergunta("Deseja Excluir: "+lista.get((i)).getNome()+" ?")) {
+				 * JOptionPane.showMessageDialog(null,
+				 * lista.get((i)).getNome()+" Foi Excluido com sucesso !!"); lista.remove(i); }
+				 * } else { JOptionPane.showMessageDialog(
+				 * null," O item não foi encontrado, tente outro Id !!","Error",
+				 * JOptionPane.WARNING_MESSAGE); } }
+				 */
+				if (retornatruearraylist(lista, op)) {
+					for (int i = 0; i < lista.size(); i++) {
+						if (op == lista.get(i).getId()) {
+							if (lg.retornapergunta("Deseja Excluir: " + lista.get((i)).getNome() + " ?")) {
+								JOptionPane.showMessageDialog(null,
+										lista.get((i)).getNome() + " Foi Excluido com sucesso !!");
+								lista.remove(i);
+								break;
+							}
+						}
 					}
-					else {
-						JOptionPane.showMessageDialog(null," O item não foi encontrado, tente outro Id !!","Error", JOptionPane.WARNING_MESSAGE);
-					}
+				} else {
+					JOptionPane.showMessageDialog(null, " O item não foi encontrado, tente outro Id !!", "Error",
+							JOptionPane.WARNING_MESSAGE);
 				}
-				
+
 				listar.setVisible(false);
 				dispose();
 			}
@@ -68,6 +85,18 @@ public class TelaExcluir extends JFrame {
 		btnExcluir.setBounds(191, 69, 137, 35);
 		contentPane.add(btnExcluir);
 
+	}
+	public boolean retornatruearraylist(ArrayList<CadastroAnimal> lista,int op) {
+		boolean existe = false;
+		for (int i = 0; i < lista.size(); i++) {
+			if (op == lista.get(i).getId()) {
+				existe = true;
+					break;
+				
+			}
+		}
+		return existe;
+		
 	}
 
 }

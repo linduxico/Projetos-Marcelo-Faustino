@@ -2,6 +2,7 @@ package backEnd;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -9,24 +10,29 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-public class ImportarDados {
-	public void gravarArquivo(ArrayList<CadastroAnimal> lista, String locarq, String nomearq, boolean criarNovoArq)
+public class ImportarDadosFuncionarios {
+	private String locarq = System.getProperty("user.home");
+	private String nomearq = "lsl";
+	private String extencao = "\\" + nomearq + ".txt";
+	private File arquivo = new File(locarq+extencao);
+	public void gravarArquivo(String nomearq, boolean criarNovoArq)
 			throws IOException {
-		FileWriter fw = new FileWriter(locarq + nomearq, criarNovoArq);
-		BufferedWriter bw = new BufferedWriter(fw);
-		for (int i = 0; i < lista.size(); i++) {
-			bw.write(lista.get(i).getNome() + "," + lista.get(i).getTipo() + "," + lista.get(i).getRaca() + ","
-					+ lista.get(i).getCor() + "," + lista.get(i).getPeso() + "," + lista.get(i).getAltura() + ","
-					+ lista.get(i).getAnoNasc() + "\n");
+		
+		if(arquivo.exists()) {
+			FileWriter fw = new FileWriter(locarq+extencao, criarNovoArq);
+			BufferedWriter bw = new BufferedWriter(fw);
+			if (!criarNovoArq) {
+				JOptionPane.showMessageDialog(null, "Funcionario Criado com Sucesso !!");
+			} else {
+				JOptionPane.showMessageDialog(null, "Arquivo Subscrito e salvo com sucesso!");
+			}
+			bw.close();
+			fw.close();
 		}
-		// bw.write(conteudo + "\n");
-		if (!criarNovoArq) {
-			JOptionPane.showMessageDialog(null, "Arquivo criado com sucesso!");
-		} else {
-			JOptionPane.showMessageDialog(null, "Arquivo Subscrito e salvo com sucesso!");
+		else {
+			
 		}
-		bw.close();
-		fw.close();
+		
 
 	}
 

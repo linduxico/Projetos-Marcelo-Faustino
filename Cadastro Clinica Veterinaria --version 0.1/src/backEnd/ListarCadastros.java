@@ -23,18 +23,6 @@ public class ListarCadastros extends JFrame {
 	private JTable table;
 	private static ListarCadastros frame;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					frame = new ListarCadastros();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	public ListarCadastros() {
 		
