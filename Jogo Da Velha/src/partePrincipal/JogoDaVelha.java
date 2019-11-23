@@ -30,23 +30,29 @@ public class JogoDaVelha extends JFrame {
 	JLabel lInformacao = new JLabel("Jogador " + JOGADOR_1);
 
 	public JogoDaVelha() {
+		boolean resp = retornapergunta("Voce deseja Jogar contra Alguem ou Sozinho?","Player Vs Pc","Player Vs Player");
+		if(resp) {
+			
+		}
+		else {
+			
+		}
 		configurarJanela();
 		configurarTela();
 	}
 
 	public void configurarTela() {
-		add(BorderLayout.CENTER, pTela);
-		add(BorderLayout.NORTH, lInformacao);
-		pTela.setBackground(Color.BLACK);
-		lInformacao.setFont(new Font("Arial", Font.BOLD, 35));
-		lInformacao.setForeground(new Color(50, 200, 50));
-		lInformacao.setHorizontalAlignment(SwingConstants.CENTER);
-
 		for (int i = 0; i < 9; i++) {
 			Bloco bloco = new Bloco();
 			blocos[i] = bloco;
 			pTela.add(bloco);
-		}
+		}		
+		add(BorderLayout.CENTER, pTela);
+		add(BorderLayout.NORTH, lInformacao);
+		lInformacao.setBackground(Color.black);
+		lInformacao.setFont(new Font("Arial", Font.BOLD, 35));
+		lInformacao.setForeground(new Color(50, 200, 50));
+		lInformacao.setHorizontalAlignment(SwingConstants.CENTER);
 	}
 
 	public void mudarVez() {
@@ -117,7 +123,7 @@ public class JogoDaVelha extends JFrame {
 					}
 					mudarVez();
 					if (testarVitoria(quem)) {
-						boolean resp = retornapergunta("Jogador " + quem + " Venceu!");
+						boolean resp = retornapergunta("Jogador " + quem + " Venceu!","Restart","Sair");
 						if (resp) {
 							if(quem==JOGADOR_1) {
 								mudarVez();
@@ -130,7 +136,7 @@ public class JogoDaVelha extends JFrame {
 					}
 					rodadas++;
 					if (rodadas == 9) {
-						boolean resp = retornapergunta("Deu velha!");
+						boolean resp = retornapergunta("Deu velha!","Restart","Sair");
 						if (resp) {
 							if(quem==JOGADOR_1) {
 								mudarVez();
@@ -146,9 +152,9 @@ public class JogoDaVelha extends JFrame {
 		}
 	}
 
-	public boolean retornapergunta(String message) {
+	public boolean retornapergunta(String message,String botao1, String botao2) {
 		boolean resposta = false;
-		Object[] options = { "Restart", "Sair" };
+		Object[] options = { botao1, botao2 };
 		int op = JOptionPane.showOptionDialog(null, message, "Atenção", JOptionPane.DEFAULT_OPTION,
 				JOptionPane.WARNING_MESSAGE, null, options, 0);
 		if (op == 0) {
@@ -160,12 +166,15 @@ public class JogoDaVelha extends JFrame {
 	}
 
 	public void resetgame() {
-		
 		jogadorVez = JOGADOR_1;
 		rodadas = 0;
 		configurarJanela();
 		pTela.removeAll();
 		configurarTela();
+	}
+	
+	public void inteligenciaAtificial() {
+		
 	}
 
 }
