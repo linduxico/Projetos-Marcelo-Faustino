@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.util.Random;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -26,19 +28,24 @@ public class JogoDaVelha extends JFrame {
 	final int JOGADOR_2 = 2;
 
 	int jogadorVez = JOGADOR_1;
+	static int contra = 1;
 
 	JLabel lInformacao = new JLabel("Jogador " + JOGADOR_1);
 
 	public JogoDaVelha() {
-		boolean resp = retornapergunta("Voce deseja Jogar contra Alguem ou Sozinho?","Player Vs Pc","Player Vs Player");
-		if(resp) {
-			
+		boolean resp = retornapergunta("Voce deseja Jogar contra Alguem ou Sozinho?", "Player Vs Pc",
+				"Player Vs Player");
+		if (resp) {
+			configurarJanela();
+			configurarTela();
+			contra = 2;
+		} else {
+			configurarJanela();
+			configurarTela();
+			contra = 1;
+
 		}
-		else {
-			
-		}
-		configurarJanela();
-		configurarTela();
+
 	}
 
 	public void configurarTela() {
@@ -46,7 +53,8 @@ public class JogoDaVelha extends JFrame {
 			Bloco bloco = new Bloco();
 			blocos[i] = bloco;
 			pTela.add(bloco);
-		}		
+			bloco.setText(i + "");
+		}
 		add(BorderLayout.CENTER, pTela);
 		add(BorderLayout.NORTH, lInformacao);
 		lInformacao.setBackground(Color.black);
@@ -105,6 +113,10 @@ public class JogoDaVelha extends JFrame {
 
 	public static void main(String[] args) {
 		new JogoDaVelha();
+		if (contra == 2) {
+		} else {
+
+		}
 	}
 
 	public class Bloco extends JButton {
@@ -113,46 +125,77 @@ public class JogoDaVelha extends JFrame {
 		public Bloco() {
 			setBackground(Color.WHITE);
 			addActionListener(e -> {
-				if (quem == 0) {
-					if (jogadorVez == JOGADOR_1) {
-						setIcon(iconCirculo);
-						quem = JOGADOR_1;
-					} else {
-						setIcon(iconX);
-						quem = JOGADOR_2;
-					}
-					mudarVez();
-					if (testarVitoria(quem)) {
-						boolean resp = retornapergunta("Jogador " + quem + " Venceu!","Restart","Sair");
-						if (resp) {
-							if(quem==JOGADOR_1) {
-								mudarVez();
-							}
-							resetgame();
-
+				if (contra == 1) {
+					if (quem == 0) {
+						if (jogadorVez == JOGADOR_1) {
+							setIcon(iconCirculo);
+							quem = JOGADOR_1;
 						} else {
-							System.exit(0);
+							setIcon(iconX);
+							quem = JOGADOR_2;
+						}
+						mudarVez();
+						if (testarVitoria(quem)) {
+							boolean resp = retornapergunta("Jogador " + quem + " Venceu!", "Restart", "Sair");
+							if (resp) {
+								if (quem == JOGADOR_1) {
+									mudarVez();
+								}
+								resetgame();
+
+							} else {
+								System.exit(0);
+							}
 						}
 					}
+
 					rodadas++;
-					if (rodadas == 9) {
-						boolean resp = retornapergunta("Deu velha!","Restart","Sair");
-						if (resp) {
-							if(quem==JOGADOR_1) {
-								mudarVez();
+				}
+				if (contra == 2) {
+					if (getIcon() == null) {
+						quem = JOGADOR_1;
+						setIcon(iconCirculo);
+						if (testarVitoria(JOGADOR_1)) {
+							boolean resp = retornapergunta("Jogador " + quem + " Venceu!", "Restart", "Sair");
+							if (resp) {
+								resetgame();
+
+							} else {
+								System.exit(0);
 							}
-							resetgame();
 						}
-						else {
-							System.exit(0);
+						verificar();
+						inteligenciaAtificial();
+						if (testarVitoria(JOGADOR_2)) {
+							boolean resp = retornapergunta("Jogador " + JOGADOR_2 + " Venceu!", "Restart", "Sair");
+							if (resp) {
+								resetgame();
+
+							} else {
+								System.exit(0);
+							}
 						}
+						rodadas++;
 					}
 				}
+				if (rodadas >= 9) {
+					boolean resp = retornapergunta("Deu velha!", "Restart", "Sair");
+					if (resp) {
+						if (quem == JOGADOR_1) {
+							mudarVez();
+						}
+						resetgame();
+					} else {
+						System.exit(0);
+					}
+				}
+
 			});
 		}
+
 	}
 
-	public boolean retornapergunta(String message,String botao1, String botao2) {
+	public boolean retornapergunta(String message, String botao1, String botao2) {
 		boolean resposta = false;
 		Object[] options = { botao1, botao2 };
 		int op = JOptionPane.showOptionDialog(null, message, "Atenção", JOptionPane.DEFAULT_OPTION,
@@ -168,13 +211,246 @@ public class JogoDaVelha extends JFrame {
 	public void resetgame() {
 		jogadorVez = JOGADOR_1;
 		rodadas = 0;
-		configurarJanela();
 		pTela.removeAll();
-		configurarTela();
-	}
-	
-	public void inteligenciaAtificial() {
-		
+		dispose();
+		new JogoDaVelha();
 	}
 
+	public int inteligenciaAtificial() {
+		rodadas++;
+		if (blocos[0].quem == JOGADOR_2 && blocos[1].quem == JOGADOR_2 && blocos[2].getIcon() == null) {
+			blocos[2].quem = JOGADOR_2;
+			blocos[2].setIcon(iconX);
+			// setando icone quando clicado no primeiro e terceiro quadrante
+			return 0;
+		}else if (blocos[5].quem == JOGADOR_2 && blocos[4].quem == JOGADOR_2 &&blocos[3].quem == JOGADOR_1 && blocos[1].getIcon() == null) {
+			blocos[1].quem = JOGADOR_2;
+			blocos[1].setIcon(iconX);
+			// setando icone quando clicado no primeiro e terceiro quadrante
+			return 0;
+		}else if (blocos[3].quem == JOGADOR_2 && blocos[4].quem == JOGADOR_2 &&blocos[5].quem == JOGADOR_1 && blocos[2].getIcon() == null) {
+			blocos[2].quem = JOGADOR_2;
+			blocos[2].setIcon(iconX);
+			// setando icone quando clicado no primeiro e terceiro quadrante
+			return 0;
+		}else if (blocos[1].quem == JOGADOR_2 && blocos[4].quem == JOGADOR_2 && blocos[7].getIcon() == null) {
+			blocos[7].quem = JOGADOR_2;
+			blocos[7].setIcon(iconX);
+			// setando icone quando clicado no primeiro e terceiro quadrante
+			return 0;
+		}else if (blocos[6].quem == JOGADOR_2 && blocos[4].quem == JOGADOR_2 && blocos[2].getIcon() == null) {
+			blocos[2].quem = JOGADOR_2;
+			blocos[2].setIcon(iconX);
+			// setando icone quando clicado no primeiro e terceiro quadrante
+			return 0;
+		}else if (blocos[3].quem == JOGADOR_2 && blocos[4].quem == JOGADOR_2 &&blocos[1].quem == JOGADOR_1 && blocos[7].getIcon() == null) {
+			blocos[7].quem = JOGADOR_2;
+			blocos[7].setIcon(iconX);
+			// setando icone quando clicado no primeiro e terceiro quadrante
+			return 0;
+		}else if (blocos[3].quem == JOGADOR_2 && blocos[4].quem == JOGADOR_2 &&blocos[5].quem == JOGADOR_1 && blocos[2].getIcon() == null) {
+			blocos[2].quem = JOGADOR_2;
+			blocos[2].setIcon(iconX);
+			// setando icone quando clicado no primeiro e terceiro quadrante
+			return 0;
+		}else if (blocos[0].quem == JOGADOR_2 && blocos[4].quem == JOGADOR_2 && blocos[8].getIcon() == null) {
+			blocos[8].quem = JOGADOR_2;
+			blocos[8].setIcon(iconX);
+			// setando icone quando clicado no primeiro e terceiro quadrante
+			return 0;
+		}else if (blocos[8].quem == JOGADOR_2 && blocos[4].quem == JOGADOR_2 && blocos[0].getIcon() == null) {
+			blocos[0].quem = JOGADOR_2;
+			blocos[0].setIcon(iconX);
+			// setando icone quando clicado no primeiro e terceiro quadrante
+			return 0;
+		}else if (blocos[2].quem == JOGADOR_2 && blocos[4].quem == JOGADOR_2 && blocos[6].getIcon() == null) {
+			blocos[6].quem = JOGADOR_2;
+			blocos[6].setIcon(iconX);
+			// setando icone quando clicado no primeiro e terceiro quadrante
+			return 0;
+		}else if (blocos[7].quem == JOGADOR_2 && blocos[8].quem == JOGADOR_2 && blocos[6].getIcon() == null) {
+			blocos[6].quem = JOGADOR_2;
+			blocos[6].setIcon(iconX);
+			// setando icone quando clicado no primeiro e terceiro quadrante
+			return 0;
+		}else if (blocos[0].quem == JOGADOR_2 && blocos[3].quem == JOGADOR_2 && blocos[6].getIcon() == null) {
+			blocos[6].quem = JOGADOR_2;
+			blocos[6].setIcon(iconX);
+			// setando icone quando clicado no primeiro e terceiro quadrante
+			return 0;
+		}else if (blocos[0].quem == JOGADOR_2 && blocos[4].quem == JOGADOR_2 && blocos[8].getIcon() == null) {
+			blocos[8].quem = JOGADOR_2;
+			blocos[8].setIcon(iconX);
+			// setando icone quando clicado no primeiro e terceiro quadrante
+			return 0;
+		}else if (blocos[6].quem == JOGADOR_2 && blocos[7].quem == JOGADOR_2 && blocos[8].getIcon() == null) {
+			blocos[8].quem = JOGADOR_2;
+			blocos[8].setIcon(iconX);
+			// setando icone quando clicado no primeiro e terceiro quadrante
+			return 0;
+		}else if (blocos[6].quem == JOGADOR_2 && blocos[8].quem == JOGADOR_2 && blocos[7].getIcon() == null) {
+			blocos[7].quem = JOGADOR_2;
+			blocos[7].setIcon(iconX);
+			// setando icone quando clicado no primeiro e terceiro quadrante
+			return 0;
+		}else if (blocos[1].quem == JOGADOR_2 && blocos[2].quem == JOGADOR_2 && blocos[0].getIcon() == null) {
+			blocos[0].quem = JOGADOR_2;
+			blocos[0].setIcon(iconX);
+			// setando icone quando clicado no primeiro e terceiro quadrante
+			return 0;
+		}
+		else if (blocos[0].quem == JOGADOR_2 && blocos[2].quem == JOGADOR_2 && blocos[1].getIcon() == null) {
+			blocos[1].quem = JOGADOR_2;
+			blocos[1].setIcon(iconX);
+			// setando icone quando clicado no primeiro e terceiro quadrante
+			return 0;
+		}else if (blocos[0].quem == JOGADOR_1 && blocos[1].quem == JOGADOR_1 && blocos[2].getIcon() == null) {
+			blocos[2].quem = JOGADOR_2;
+			blocos[2].setIcon(iconX);
+			// setando icone quando clicado no primeiro e segundo quadrante
+			return 0;
+		}
+		else if (blocos[3].quem == JOGADOR_2 && blocos[4].quem == JOGADOR_2 && blocos[5].getIcon() == null) {
+			blocos[5].quem = JOGADOR_2;
+			blocos[5].setIcon(iconX);
+			// setando icone quando clicado no primeiro e terceiro quadrante
+			return 0;
+		}
+		else if (blocos[4].quem == JOGADOR_2 && blocos[5].quem == JOGADOR_2 && blocos[3].getIcon() == null) {
+			blocos[3].quem = JOGADOR_2;
+			blocos[3].setIcon(iconX);
+			// setando icone quando clicado no primeiro e terceiro quadrante
+			return 0;
+		}else if (blocos[0].quem == JOGADOR_2 && blocos[6].quem == JOGADOR_2 && blocos[3].getIcon() == null) {
+			blocos[3].quem = JOGADOR_2;
+			blocos[3].setIcon(iconX);
+			// setando icone quando clicado no primeiro e terceiro quadrante
+			return 0;
+		}
+		else if (blocos[0].quem == JOGADOR_1 && blocos[2].quem == JOGADOR_1 && blocos[1].getIcon() == null) {
+			blocos[1].quem = JOGADOR_2;
+			blocos[1].setIcon(iconX);
+			// setando icone quando clicado no primeiro e terceiro quadrante
+			return 0;
+		} else if (blocos[1].quem == JOGADOR_1 && blocos[2].quem == JOGADOR_1 && blocos[0].getIcon() == null) {
+			blocos[0].quem = JOGADOR_2;
+			blocos[0].setIcon(iconX);
+			// setando icone quando clicado no primeiro e terceiro quadrante
+			return 0;
+		} else if (blocos[4].quem == JOGADOR_1 && blocos[5].quem == JOGADOR_1 && blocos[3].getIcon() == null) {
+			blocos[3].quem = JOGADOR_2;
+			blocos[3].setIcon(iconX);
+			// setando icone quando clicado no quarto e quinto quadrante
+			return 0;
+		} else if (blocos[3].quem == JOGADOR_1 && blocos[4].quem == JOGADOR_1 && blocos[5].getIcon() == null) {
+			blocos[5].quem = JOGADOR_2;
+			blocos[5].setIcon(iconX);
+			return 0;
+			// setando icone quando clicado no terceiro e quarto quadrante
+		} else if (blocos[6].quem == JOGADOR_1 && blocos[7].quem == JOGADOR_1 && blocos[8].getIcon() == null) {
+			blocos[8].quem = JOGADOR_2;
+			blocos[8].setIcon(iconX);
+			return 0;
+			// setando icone quando clicado no sexto e setimo quadrante
+		} else if (blocos[7].quem == JOGADOR_1 && blocos[8].quem == JOGADOR_1 && blocos[6].getIcon() == null) {
+			blocos[6].quem = JOGADOR_2;
+			blocos[6].setIcon(iconX);
+			return 0;
+			// setando icone quando clicado no setimo e oitavo quadrante
+		}
+		if (blocos[0].quem == JOGADOR_1 && blocos[3].quem == JOGADOR_1 && blocos[6].getIcon() == null) {
+			blocos[6].quem = JOGADOR_2;
+			blocos[6].setIcon(iconX);
+			return 0;
+			// setando icone quando clicado no zero e terceiro quadrante
+		} else if (blocos[3].quem == JOGADOR_1 && blocos[6].quem == JOGADOR_1 && blocos[0].getIcon() == null) {
+			blocos[0].quem = JOGADOR_2;
+			blocos[0].setIcon(iconX);
+			return 0;
+			// setando icone quando clicado no terceiro e sexto quadrante
+		} else if (blocos[1].quem == JOGADOR_1 && blocos[4].quem == JOGADOR_1 && blocos[7].getIcon() == null) {
+			blocos[7].quem = JOGADOR_2;
+			blocos[7].setIcon(iconX);
+			return 0;
+			// setando icone quando clicado no primeiro e quarto quadrante
+		} else if (blocos[4].quem == JOGADOR_1 && blocos[7].quem == JOGADOR_1 && blocos[1].getIcon() == null) {
+			blocos[1].quem = JOGADOR_2;
+			blocos[1].setIcon(iconX);
+			return 0;
+			// setando icone quando clicado no quarto e setimo quadrante
+		} else if (blocos[2].quem == JOGADOR_1 && blocos[5].quem == JOGADOR_1 && blocos[8].getIcon() == null) {
+			blocos[8].quem = JOGADOR_2;
+			blocos[8].setIcon(iconX);
+			return 0;
+			// setando icone quando clicado no segundo e quinto quadrante
+		} else if (blocos[5].quem == JOGADOR_1 && blocos[8].quem == JOGADOR_1 && blocos[2].getIcon() == null) {
+			blocos[2].quem = JOGADOR_2;
+			blocos[2].setIcon(iconX);
+			return 0;
+			// setando icone quando clicado no quinto e oitavo quadrante
+		} else if (blocos[6].quem == JOGADOR_1 && blocos[8].quem == JOGADOR_1 && blocos[7].getIcon() == null) {
+			blocos[7].quem = JOGADOR_2;
+			blocos[7].setIcon(iconX);
+			return 0;
+			// setando icone quando clicado no sexto e oitavo quadrante
+		} else if (blocos[2].quem == JOGADOR_1 && blocos[8].quem == JOGADOR_1 && blocos[5].getIcon() == null) {
+			blocos[5].quem = JOGADOR_2;
+			blocos[5].setIcon(iconX);
+			return 0;
+			// setando icone quando clicado no segundo e oitavo quadrante
+		} else if (blocos[0].quem == JOGADOR_1 && blocos[6].quem == JOGADOR_1 && blocos[3].getIcon() == null) {
+			blocos[3].quem = JOGADOR_2;
+			blocos[3].setIcon(iconX);
+			return 0;
+			// setando icone quando clicado no zero e sexto quadrante
+		} else if (blocos[0].quem == JOGADOR_1 && blocos[4].quem == JOGADOR_1 && blocos[8].getIcon() == null) {
+			blocos[8].quem = JOGADOR_2;
+			blocos[8].setIcon(iconX);
+			return 0;
+			// diagonal
+		} else if (blocos[2].quem == JOGADOR_1 && blocos[4].quem == JOGADOR_1 && blocos[6].getIcon() == null) {
+			blocos[6].quem = JOGADOR_2;
+			blocos[6].setIcon(iconX);
+			return 0;
+			// diagonal
+		} else if (blocos[8].quem == JOGADOR_1 && blocos[4].quem == JOGADOR_1 && blocos[0].getIcon() == null) {
+			blocos[0].quem = JOGADOR_2;
+			blocos[0].setIcon(iconX);
+			return 0;
+			// diagonal
+		} else if (blocos[6].quem == JOGADOR_1 && blocos[4].quem == JOGADOR_1 && blocos[2].getIcon() == null) {
+			blocos[2].quem = JOGADOR_2;
+			blocos[2].setIcon(iconX);
+			return 0;
+			// diagonal
+		} else if (blocos[4].quem != JOGADOR_1 && blocos[4].getIcon() == null) {
+			blocos[4].quem = JOGADOR_2;
+			blocos[4].setIcon(iconX);
+			return 0;
+			// setando o meio se o usuario clicar nas laterais
+		} else if(blocos[4].getIcon()==iconCirculo) {
+			Random nr = new Random();
+			int n = nr.nextInt(9);
+			if (n % 2 != 0) {
+				n -= 1;
+			}
+			if (n == 4) {
+				n = 0;
+			}
+			blocos[n].quem = JOGADOR_2;
+			blocos[n].setIcon(iconX);
+
+			return 0;
+		}
+		return 0;
+	}
+ 
+	public void verificar() {
+		for (int i = 0; i < blocos.length; i++) {
+			if(blocos[i].getIcon() == null) {
+				System.out.println("Bloco : "+i);
+			}
+			
+		}
+	}
 }
