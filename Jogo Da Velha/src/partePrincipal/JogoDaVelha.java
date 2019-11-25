@@ -152,41 +152,42 @@ public class JogoDaVelha extends JFrame {
 					rodadas++;
 				}
 				if (contra == 2) {
-					if (getIcon() == null) {
-						quem = JOGADOR_1;
-						setIcon(iconCirculo);
-						if (testarVitoria(JOGADOR_1)) {
-							boolean resp = retornapergunta("Jogador " + quem + " Venceu!", "Restart", "Sair");
-							if (resp) {
-								resetgame();
 
+						if (getIcon() == null) {
+							quem = JOGADOR_1;
+							setIcon(iconCirculo);
+							if (testarVitoria(JOGADOR_1)) {
+								boolean resp = retornapergunta("Jogador " + quem + " Venceu!", "Restart", "Sair");
+								if (resp) {
+									resetgame();
+
+								} else {
+									System.exit(0);
+								}
+							}
+							inteligenciaAtificial();
+							if (testarVitoria(JOGADOR_2)) {
+								boolean resp = retornapergunta("Jogador " + JOGADOR_2 + " Venceu!", "Restart", "Sair");
+								if (resp) {
+									resetgame();
+
+								} else {
+									System.exit(0);
+								}
+							}
+							rodadas++;
+
+							if (rodadas >= 9) {
+							boolean resp = retornapergunta("Deu velha!", "Restart", "Sair");
+							if (resp) {
+								if (quem == JOGADOR_1) {
+									mudarVez();
+								}
+								resetgame();
 							} else {
 								System.exit(0);
 							}
 						}
-						verificar();
-						inteligenciaAtificial();
-						if (testarVitoria(JOGADOR_2)) {
-							boolean resp = retornapergunta("Jogador " + JOGADOR_2 + " Venceu!", "Restart", "Sair");
-							if (resp) {
-								resetgame();
-
-							} else {
-								System.exit(0);
-							}
-						}
-						rodadas++;
-					}
-				}
-				if (rodadas >= 9) {
-					boolean resp = retornapergunta("Deu velha!", "Restart", "Sair");
-					if (resp) {
-						if (quem == JOGADOR_1) {
-							mudarVez();
-						}
-						resetgame();
-					} else {
-						System.exit(0);
 					}
 				}
 
@@ -218,116 +219,125 @@ public class JogoDaVelha extends JFrame {
 
 	public int inteligenciaAtificial() {
 		rodadas++;
+		if (rodadas >= 9) {
+			boolean resp = retornapergunta("Deu velha!", "Restart", "Sair");
+			if (resp) {
+				resetgame();
+				
+			} else {
+				System.exit(0);
+			}
+		}
 		if (blocos[0].quem == JOGADOR_2 && blocos[1].quem == JOGADOR_2 && blocos[2].getIcon() == null) {
 			blocos[2].quem = JOGADOR_2;
 			blocos[2].setIcon(iconX);
 			// setando icone quando clicado no primeiro e terceiro quadrante
 			return 0;
-		}else if (blocos[5].quem == JOGADOR_2 && blocos[4].quem == JOGADOR_2 &&blocos[3].quem == JOGADOR_1 && blocos[1].getIcon() == null) {
+		} else if (blocos[5].quem == JOGADOR_2 && blocos[4].quem == JOGADOR_2 && blocos[3].quem == JOGADOR_1
+				&& blocos[1].getIcon() == null) {
 			blocos[1].quem = JOGADOR_2;
 			blocos[1].setIcon(iconX);
 			// setando icone quando clicado no primeiro e terceiro quadrante
 			return 0;
-		}else if (blocos[3].quem == JOGADOR_2 && blocos[4].quem == JOGADOR_2 &&blocos[5].quem == JOGADOR_1 && blocos[2].getIcon() == null) {
+		} else if (blocos[3].quem == JOGADOR_2 && blocos[4].quem == JOGADOR_2 && blocos[5].quem == JOGADOR_1
+				&& blocos[2].getIcon() == null) {
 			blocos[2].quem = JOGADOR_2;
 			blocos[2].setIcon(iconX);
 			// setando icone quando clicado no primeiro e terceiro quadrante
 			return 0;
-		}else if (blocos[1].quem == JOGADOR_2 && blocos[4].quem == JOGADOR_2 && blocos[7].getIcon() == null) {
+		} else if (blocos[1].quem == JOGADOR_2 && blocos[4].quem == JOGADOR_2 && blocos[7].getIcon() == null) {
 			blocos[7].quem = JOGADOR_2;
 			blocos[7].setIcon(iconX);
 			// setando icone quando clicado no primeiro e terceiro quadrante
 			return 0;
-		}else if (blocos[6].quem == JOGADOR_2 && blocos[4].quem == JOGADOR_2 && blocos[2].getIcon() == null) {
+		} else if (blocos[6].quem == JOGADOR_2 && blocos[4].quem == JOGADOR_2 && blocos[2].getIcon() == null) {
 			blocos[2].quem = JOGADOR_2;
 			blocos[2].setIcon(iconX);
 			// setando icone quando clicado no primeiro e terceiro quadrante
 			return 0;
-		}else if (blocos[3].quem == JOGADOR_2 && blocos[4].quem == JOGADOR_2 &&blocos[1].quem == JOGADOR_1 && blocos[7].getIcon() == null) {
+		} else if (blocos[3].quem == JOGADOR_2 && blocos[4].quem == JOGADOR_2 && blocos[1].quem == JOGADOR_1
+				&& blocos[7].getIcon() == null) {
 			blocos[7].quem = JOGADOR_2;
 			blocos[7].setIcon(iconX);
 			// setando icone quando clicado no primeiro e terceiro quadrante
 			return 0;
-		}else if (blocos[3].quem == JOGADOR_2 && blocos[4].quem == JOGADOR_2 &&blocos[5].quem == JOGADOR_1 && blocos[2].getIcon() == null) {
+		} else if (blocos[3].quem == JOGADOR_2 && blocos[4].quem == JOGADOR_2 && blocos[5].quem == JOGADOR_1
+				&& blocos[2].getIcon() == null) {
 			blocos[2].quem = JOGADOR_2;
 			blocos[2].setIcon(iconX);
 			// setando icone quando clicado no primeiro e terceiro quadrante
 			return 0;
-		}else if (blocos[0].quem == JOGADOR_2 && blocos[4].quem == JOGADOR_2 && blocos[8].getIcon() == null) {
+		} else if (blocos[0].quem == JOGADOR_2 && blocos[4].quem == JOGADOR_2 && blocos[8].getIcon() == null) {
 			blocos[8].quem = JOGADOR_2;
 			blocos[8].setIcon(iconX);
 			// setando icone quando clicado no primeiro e terceiro quadrante
 			return 0;
-		}else if (blocos[8].quem == JOGADOR_2 && blocos[4].quem == JOGADOR_2 && blocos[0].getIcon() == null) {
+		} else if (blocos[8].quem == JOGADOR_2 && blocos[4].quem == JOGADOR_2 && blocos[0].getIcon() == null) {
 			blocos[0].quem = JOGADOR_2;
 			blocos[0].setIcon(iconX);
 			// setando icone quando clicado no primeiro e terceiro quadrante
 			return 0;
-		}else if (blocos[2].quem == JOGADOR_2 && blocos[4].quem == JOGADOR_2 && blocos[6].getIcon() == null) {
+		} else if (blocos[2].quem == JOGADOR_2 && blocos[4].quem == JOGADOR_2 && blocos[6].getIcon() == null) {
 			blocos[6].quem = JOGADOR_2;
 			blocos[6].setIcon(iconX);
 			// setando icone quando clicado no primeiro e terceiro quadrante
 			return 0;
-		}else if (blocos[7].quem == JOGADOR_2 && blocos[8].quem == JOGADOR_2 && blocos[6].getIcon() == null) {
+		} else if (blocos[7].quem == JOGADOR_2 && blocos[8].quem == JOGADOR_2 && blocos[6].getIcon() == null) {
 			blocos[6].quem = JOGADOR_2;
 			blocos[6].setIcon(iconX);
 			// setando icone quando clicado no primeiro e terceiro quadrante
 			return 0;
-		}else if (blocos[0].quem == JOGADOR_2 && blocos[3].quem == JOGADOR_2 && blocos[6].getIcon() == null) {
+		} else if (blocos[0].quem == JOGADOR_2 && blocos[3].quem == JOGADOR_2 && blocos[6].getIcon() == null) {
 			blocos[6].quem = JOGADOR_2;
 			blocos[6].setIcon(iconX);
 			// setando icone quando clicado no primeiro e terceiro quadrante
 			return 0;
-		}else if (blocos[0].quem == JOGADOR_2 && blocos[4].quem == JOGADOR_2 && blocos[8].getIcon() == null) {
+		} else if (blocos[0].quem == JOGADOR_2 && blocos[4].quem == JOGADOR_2 && blocos[8].getIcon() == null) {
 			blocos[8].quem = JOGADOR_2;
 			blocos[8].setIcon(iconX);
 			// setando icone quando clicado no primeiro e terceiro quadrante
 			return 0;
-		}else if (blocos[6].quem == JOGADOR_2 && blocos[7].quem == JOGADOR_2 && blocos[8].getIcon() == null) {
+		} else if (blocos[6].quem == JOGADOR_2 && blocos[7].quem == JOGADOR_2 && blocos[8].getIcon() == null) {
 			blocos[8].quem = JOGADOR_2;
 			blocos[8].setIcon(iconX);
 			// setando icone quando clicado no primeiro e terceiro quadrante
 			return 0;
-		}else if (blocos[6].quem == JOGADOR_2 && blocos[8].quem == JOGADOR_2 && blocos[7].getIcon() == null) {
+		} else if (blocos[6].quem == JOGADOR_2 && blocos[8].quem == JOGADOR_2 && blocos[7].getIcon() == null) {
 			blocos[7].quem = JOGADOR_2;
 			blocos[7].setIcon(iconX);
 			// setando icone quando clicado no primeiro e terceiro quadrante
 			return 0;
-		}else if (blocos[1].quem == JOGADOR_2 && blocos[2].quem == JOGADOR_2 && blocos[0].getIcon() == null) {
+		} else if (blocos[1].quem == JOGADOR_2 && blocos[2].quem == JOGADOR_2 && blocos[0].getIcon() == null) {
 			blocos[0].quem = JOGADOR_2;
 			blocos[0].setIcon(iconX);
 			// setando icone quando clicado no primeiro e terceiro quadrante
 			return 0;
-		}
-		else if (blocos[0].quem == JOGADOR_2 && blocos[2].quem == JOGADOR_2 && blocos[1].getIcon() == null) {
+		} else if (blocos[0].quem == JOGADOR_2 && blocos[2].quem == JOGADOR_2 && blocos[1].getIcon() == null) {
 			blocos[1].quem = JOGADOR_2;
 			blocos[1].setIcon(iconX);
 			// setando icone quando clicado no primeiro e terceiro quadrante
 			return 0;
-		}else if (blocos[0].quem == JOGADOR_1 && blocos[1].quem == JOGADOR_1 && blocos[2].getIcon() == null) {
+		} else if (blocos[0].quem == JOGADOR_1 && blocos[1].quem == JOGADOR_1 && blocos[2].getIcon() == null) {
 			blocos[2].quem = JOGADOR_2;
 			blocos[2].setIcon(iconX);
 			// setando icone quando clicado no primeiro e segundo quadrante
 			return 0;
-		}
-		else if (blocos[3].quem == JOGADOR_2 && blocos[4].quem == JOGADOR_2 && blocos[5].getIcon() == null) {
+		} else if (blocos[3].quem == JOGADOR_2 && blocos[4].quem == JOGADOR_2 && blocos[5].getIcon() == null) {
 			blocos[5].quem = JOGADOR_2;
 			blocos[5].setIcon(iconX);
 			// setando icone quando clicado no primeiro e terceiro quadrante
 			return 0;
-		}
-		else if (blocos[4].quem == JOGADOR_2 && blocos[5].quem == JOGADOR_2 && blocos[3].getIcon() == null) {
+		} else if (blocos[4].quem == JOGADOR_2 && blocos[5].quem == JOGADOR_2 && blocos[3].getIcon() == null) {
 			blocos[3].quem = JOGADOR_2;
 			blocos[3].setIcon(iconX);
 			// setando icone quando clicado no primeiro e terceiro quadrante
 			return 0;
-		}else if (blocos[0].quem == JOGADOR_2 && blocos[6].quem == JOGADOR_2 && blocos[3].getIcon() == null) {
+		} else if (blocos[0].quem == JOGADOR_2 && blocos[6].quem == JOGADOR_2 && blocos[3].getIcon() == null) {
 			blocos[3].quem = JOGADOR_2;
 			blocos[3].setIcon(iconX);
 			// setando icone quando clicado no primeiro e terceiro quadrante
 			return 0;
-		}
-		else if (blocos[0].quem == JOGADOR_1 && blocos[2].quem == JOGADOR_1 && blocos[1].getIcon() == null) {
+		} else if (blocos[0].quem == JOGADOR_1 && blocos[2].quem == JOGADOR_1 && blocos[1].getIcon() == null) {
 			blocos[1].quem = JOGADOR_2;
 			blocos[1].setIcon(iconX);
 			// setando icone quando clicado no primeiro e terceiro quadrante
@@ -423,12 +433,98 @@ public class JogoDaVelha extends JFrame {
 			blocos[2].setIcon(iconX);
 			return 0;
 			// diagonal
+		} else if (blocos[1].quem == JOGADOR_1 && blocos[5].quem == JOGADOR_1 && blocos[2].getIcon() == null) {
+			blocos[2].quem = JOGADOR_2;
+			blocos[2].setIcon(iconX);
+			return 0;
+			// diagonal
+		} else if (blocos[1].quem == JOGADOR_1 && blocos[3].quem == JOGADOR_1 && blocos[0].getIcon() == null) {
+			blocos[0].quem = JOGADOR_2;
+			blocos[0].setIcon(iconX);
+			return 0;
+			// diagonal
+		} else if (blocos[3].quem == JOGADOR_1 && blocos[7].quem == JOGADOR_1 && blocos[6].getIcon() == null) {
+			blocos[6].quem = JOGADOR_2;
+			blocos[6].setIcon(iconX);
+			return 0;
+			// diagonal
+		} else if (blocos[5].quem == JOGADOR_1 && blocos[7].quem == JOGADOR_1 && blocos[8].getIcon() == null) {
+			blocos[8].quem = JOGADOR_2;
+			blocos[8].setIcon(iconX);
+			return 0;
+			// diagonal
+		} else if (blocos[1].quem == JOGADOR_1 && blocos[3].quem == JOGADOR_1 && blocos[8].quem == JOGADOR_1
+				&& blocos[6].getIcon() == null) {
+			blocos[6].quem = JOGADOR_2;
+			blocos[6].setIcon(iconX);
+			return 0;
+			// diagonal
+		} else if (blocos[1].quem == JOGADOR_1 && blocos[5].quem == JOGADOR_1 && blocos[6].quem == JOGADOR_1
+				&& blocos[8].getIcon() == null) {
+			blocos[8].quem = JOGADOR_2;
+			blocos[8].setIcon(iconX);
+			return 0;
+			// diagonal
+		} else if (blocos[0].quem == JOGADOR_1 && blocos[7].quem == JOGADOR_1 && blocos[5].quem == JOGADOR_1
+				&& blocos[2].getIcon() == null) {
+			blocos[2].quem = JOGADOR_2;
+			blocos[2].setIcon(iconX);
+			return 0;
+			// diagonal
+		} else if (blocos[2].quem == JOGADOR_1 && blocos[3].quem == JOGADOR_1 && blocos[7].quem == JOGADOR_1
+				&& blocos[0].getIcon() == null) {
+			blocos[0].quem = JOGADOR_2;
+			blocos[0].setIcon(iconX);
+			return 0;
+			// diagonal
+		} else if (blocos[0].quem == JOGADOR_1 && blocos[2].quem == JOGADOR_1 && blocos[7].quem == JOGADOR_1
+				&& blocos[3].getIcon() == null) {
+			blocos[3].quem = JOGADOR_2;
+			blocos[3].setIcon(iconX);
+			return 0;
+			// diagonal
+		} else if (blocos[6].quem == JOGADOR_1 && blocos[8].quem == JOGADOR_1 && blocos[1].quem == JOGADOR_1
+				&& blocos[0].getIcon() == null) {
+			blocos[0].quem = JOGADOR_2;
+			blocos[0].setIcon(iconX);
+			return 0;
+			// diagonal
+		} else if (blocos[3].quem == JOGADOR_1 && blocos[5].quem == JOGADOR_1 && blocos[4].quem == JOGADOR_2
+				&& blocos[2].getIcon() == null) {
+			blocos[2].quem = JOGADOR_2;
+			blocos[2].setIcon(iconX);
+			return 0;
+			// diagonal
+		} else if (blocos[4].quem == JOGADOR_1 && blocos[8].quem == JOGADOR_1 && blocos[0].quem == JOGADOR_2
+				&& blocos[6].getIcon() == null) {
+			blocos[6].quem = JOGADOR_2;
+			blocos[6].setIcon(iconX);
+			return 0;
+			// diagonal
+		} else if (blocos[0].quem == JOGADOR_1 && blocos[5].quem == JOGADOR_1 && blocos[4].quem == JOGADOR_2
+				&& blocos[6].getIcon() == null) {
+			blocos[6].quem = JOGADOR_2;
+			blocos[6].setIcon(iconX);
+			return 0;
+			// diagonal
+		} else if (blocos[0].quem == JOGADOR_2 && blocos[3].quem == JOGADOR_1 && blocos[6].quem == JOGADOR_1
+				&& blocos[2].getIcon() == null) {
+			blocos[2].quem = JOGADOR_2;
+			blocos[2].setIcon(iconX);
+			return 0;
+			// diagonal
+		} else if (blocos[8].quem == JOGADOR_1 && blocos[1].quem == JOGADOR_1 && blocos[4].quem == JOGADOR_2
+				&& blocos[2].getIcon() == null) {
+			blocos[2].quem = JOGADOR_2;
+			blocos[2].setIcon(iconX);
+			return 0;
+			// diagonal
 		} else if (blocos[4].quem != JOGADOR_1 && blocos[4].getIcon() == null) {
 			blocos[4].quem = JOGADOR_2;
 			blocos[4].setIcon(iconX);
 			return 0;
 			// setando o meio se o usuario clicar nas laterais
-		} else if(blocos[4].getIcon()==iconCirculo) {
+		} else if (blocos[4].getIcon() == iconCirculo) {
 			Random nr = new Random();
 			int n = nr.nextInt(9);
 			if (n % 2 != 0) {
@@ -444,13 +540,5 @@ public class JogoDaVelha extends JFrame {
 		}
 		return 0;
 	}
- 
-	public void verificar() {
-		for (int i = 0; i < blocos.length; i++) {
-			if(blocos[i].getIcon() == null) {
-				System.out.println("Bloco : "+i);
-			}
-			
-		}
-	}
+
 }
