@@ -3,6 +3,8 @@ package dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+import javax.swing.JOptionPane;
+
 public class Conexao {
 
 	private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
@@ -15,7 +17,7 @@ public class Conexao {
 			Class.forName(DRIVER);
 			return DriverManager.getConnection(URL, USER, PASSWORD);
 		} catch (Exception e) {
-			System.out.print("Erro ao conectar no BD!" + e.getMessage());
+			JOptionPane.showMessageDialog(null,"Erro ao conectar no BD!" + e.getMessage());
 			return null;
 		}
 	}

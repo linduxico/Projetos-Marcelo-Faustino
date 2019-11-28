@@ -53,7 +53,6 @@ public class JogoDaVelha extends JFrame {
 			Bloco bloco = new Bloco();
 			blocos[i] = bloco;
 			pTela.add(bloco);
-			bloco.setText(i + "");
 		}
 		add(BorderLayout.CENTER, pTela);
 		add(BorderLayout.NORTH, lInformacao);
@@ -517,6 +516,24 @@ public class JogoDaVelha extends JFrame {
 				&& blocos[2].getIcon() == null) {
 			blocos[2].quem = JOGADOR_2;
 			blocos[2].setIcon(iconX);
+			return 0;
+			// diagonal
+		} else if (blocos[2].quem == JOGADOR_1 && blocos[7].quem == JOGADOR_1 && blocos[4].quem == JOGADOR_2
+				&& blocos[8].getIcon() == null) {
+			blocos[8].quem = JOGADOR_2;
+			blocos[8].setIcon(iconX);
+			return 0;
+			// diagonal
+		} else if (blocos[2].quem == JOGADOR_1 && blocos[6].quem == JOGADOR_1 && blocos[4].quem == JOGADOR_2
+				&& blocos[5].getIcon() == null) {
+			blocos[5].quem = JOGADOR_2;
+			blocos[5].setIcon(iconX);
+			return 0;
+			// diagonal
+		}else if (blocos[2].quem == JOGADOR_1 && blocos[3].quem == JOGADOR_1 && blocos[4].quem == JOGADOR_2
+				&& blocos[0].getIcon() == null) {
+			blocos[0].quem = JOGADOR_2;
+			blocos[0].setIcon(iconX);
 			return 0;
 			// diagonal
 		} else if (blocos[4].quem != JOGADOR_1 && blocos[4].getIcon() == null) {

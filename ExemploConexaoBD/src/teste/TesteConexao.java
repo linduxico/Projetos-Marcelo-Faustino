@@ -4,48 +4,45 @@ import java.util.ArrayList;
 
 import dao.Conexao;
 import dao.MarcaDao;
-import modelo.Marca;
+import modelo.CadastroDePessoas;
 
 public class TesteConexao {
 
 	public static void main(String[] args) {
 		
-		//Conexao.getConnection();
+		Conexao.getConnection();
 		
-		/* Teste Inserir
+		//Teste Inserir
 		
-		Marca m = new Marca();
+		CadastroDePessoas m = new CadastroDePessoas();
 		m.setNome("VW");
 		m.setOrigem("Alemanha");
 		
 		MarcaDao.inserir(m);
-		*/
 		
-		/* Teste Alterar 
 		
-		Marca m = new Marca();
+		//Teste Alterar 
+		
+		CadastroDePessoas m = new CadastroDePessoas();
 		m.setNome("Toyota");
-		m.setOrigem("Japão");
+		m.setOrigem("Japï¿½o");
 		m.setId(2);
 		
 		MarcaDao.alterar(m);
 		
-		*/
-		
-		/* Teste Excluir 
+		//Teste Excluir 
 		
 		boolean resultado = MarcaDao.excluir(3);
 		if (resultado) {
-			System.out.println("Marca excluída com sucesso!!!");
+			System.out.println("Marca excluï¿½da com sucesso!!!");
 		}
 		else {
 			System.out.println("Erro ao excluir a Marca!!!");
 		}
 		
-		*/
 		
-		ArrayList<Marca> lista = MarcaDao.listagem();
-		for (Marca marca : lista) {
+		ArrayList<CadastroDePessoas> lista = MarcaDao.listagem();
+		for (CadastroDePessoas marca : lista) {
 			System.out.println(marca.toString());
 		}
 		

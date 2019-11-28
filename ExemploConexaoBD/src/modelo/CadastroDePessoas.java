@@ -1,6 +1,6 @@
 package modelo;
 
-public class Marca {
+public class CadastroDePessoas {
 
 	private int id;
 	private String nome;

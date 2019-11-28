@@ -5,14 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import modelo.Marca;
+import modelo.CadastroDePessoas;
 
 public class MarcaDao {
 
-	public static boolean inserir(Marca marca) {
+	public static boolean inserir(CadastroDePessoas marca) {
 		try {
 			String sql = "insert into marca (mar_nome, mar_origem) values (?, ?)";
-
 			Connection conn = Conexao.getConnection();
 			PreparedStatement pstm = conn.prepareStatement(sql);
 			pstm.setString(1, marca.getNome());
@@ -25,7 +24,7 @@ public class MarcaDao {
 		}
 	}
 
-	public static boolean alterar(Marca marca) {
+	public static boolean alterar(CadastroDePessoas marca) {
 		try {
 			String sql = "update marca set mar_nome = ?, mar_origem = ? "
 					   + " where mar_id = ?";
@@ -58,7 +57,7 @@ public class MarcaDao {
 		}
 	}
 	
-	public static ArrayList<Marca> listagem() {
+	public static ArrayList<CadastroDePessoas> listagem() {
 		
 		try {
 			String sql = "select * from marca order by mar_nome";
@@ -67,9 +66,9 @@ public class MarcaDao {
 			PreparedStatement pstm = conn.prepareStatement(sql);
 			ResultSet rs = pstm.executeQuery();
 			
-			ArrayList<Marca> listaMarcas = new ArrayList<Marca>();
+			ArrayList<CadastroDePessoas> listaMarcas = new ArrayList<CadastroDePessoas>();
 			while (rs.next()) {
-				Marca m = new Marca();
+				CadastroDePessoas m = new CadastroDePessoas();
 				m.setId(rs.getInt("mar_id"));
 				m.setNome(rs.getString("mar_nome"));
 				m.setOrigem(rs.getString("mar_origem"));
@@ -82,7 +81,7 @@ public class MarcaDao {
 		}
 	}
 	
-	public static Marca retornaPorId(int id) {
+	public static CadastroDePessoas retornaPorId(int id) {
 		try {
 			String sql = "select * from marca where mar_id = ?";
 
@@ -92,7 +91,7 @@ public class MarcaDao {
 			ResultSet rs = pstm.executeQuery();
 			
 			rs.next();
-			Marca m = new Marca();
+			CadastroDePessoas m = new CadastroDePessoas();
 			m.setId(rs.getInt("mar_id"));
 			m.setNome(rs.getString("mar_nome"));
 			return m;
