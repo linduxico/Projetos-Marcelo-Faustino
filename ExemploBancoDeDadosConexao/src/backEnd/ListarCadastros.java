@@ -56,7 +56,6 @@ public class ListarCadastros extends JFrame {
 			public void windowClosed(WindowEvent e) {
 					 tela = new InserirDados();
 					 tela.setVisible(true);
-				
 			}
 		});
 
